@@ -46,19 +46,19 @@ const Dashboard = () => {
 
 
 
-  useEffect(() => {
-    const handleRouteChange = (url) => {
-      if (url !== router.asPath) {
-        toggleClusterMenu();
-        router.events.emit("routeChangeError");
-        router.push("/dashboard");
-      }
-    };
-    router.events.on("beforeHistoryChange", handleRouteChange);
-    return () => {
-      router.events.off("beforeHistoryChange", handleRouteChange);
-    };
-  }, [router]);
+  // useEffect(() => {
+  //   const handleRouteChange = (url) => {
+  //     if (url !== router.asPath) {
+  //       toggleClusterMenu();
+  //       router.events.emit("routeChangeError");
+  //       router.push("/dashboard");
+  //     }
+  //   };
+  //   router.events.on("beforeHistoryChange", handleRouteChange);
+  //   return () => {
+  //     router.events.off("beforeHistoryChange", handleRouteChange);
+  //   };
+  // }, [router]);
 
   const [Loading, setLoading] = useState(false);
   const [Cluster, setClusters] = useState([]);
@@ -261,7 +261,7 @@ const Dashboard = () => {
 
   return (
     <>
-    {ujjwal &&
+    {ValidUser &&
       <div className="flex p-1 h-[100vh]">
         <ToastContainer />
 
@@ -461,39 +461,5 @@ const Dashboard = () => {
   );
 };
 
-// export async function getServerSideujjwal(context) {
-  //   // Parse cookies from the request headers
-//   const cookies = parse(context.req.headers.cookie || "");
-//   const token = cookies.access_token;
-
-//   try {
-//     // Verify the JWT token
-//     let decoded = await jwt.verify(token, process.env.JWT_SECRET);
-//     // console.log(decoded._id);
-//     let user = await User.findOne({ _id: decoded._id });
-//     // let user_Cluster = await Cluster.findOne({ user_id: user._id });
-//     // console.log(user_Cluster);
-
-//     if (user) {
-//       decoded = { name: user.name, email: user.email };
-//       // console.log(decoded);
-//     }
-
-//     return {
-//       ujjwal: {
-//         user_details: decoded,
-//         // Cluster: user_Cluster.Cluster
-//       },
-//     };
-//   } catch (err) {
-//     // Handle invalid or expired token
-//     return {
-//       redirect: {
-//         destination: "/login", // Redirect to login page if the token is invalid or expired
-//         permanent: false,
-//       },
-//     };
-//   }
-// }
 
 export default Dashboard;
