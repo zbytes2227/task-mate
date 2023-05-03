@@ -4,17 +4,16 @@ import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Login = () => {
+const Login = ({Loading,setLoading}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [Loading, setLoading] = useState(false);
   const [response, setResponse] = useState("");
 
   const router = useRouter();
 
   async function loginUser(e) {
-    e.preventDefault();
     setLoading(true);
+    e.preventDefault();
     const fetch_api = await fetch("/api/login/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -25,7 +24,6 @@ const Login = () => {
     });
 
     const data = await fetch_api.json();
-    setLoading(false);
     if (data.success) {
       toast.success(`${data.msg}`, {
         position: "top-center",
@@ -39,6 +37,7 @@ const Login = () => {
       });
       setEmail('');
       setPassword('');
+      setLoading(false);
       setTimeout(() => {
         router.push('/dashboard');
       }, 1000);
@@ -93,7 +92,7 @@ const Login = () => {
                   </div>
                   <Link href="#" className="text-sm font-medium text-orange-600 hover:underline dark:text-orange-500">Forgot password?</Link>
                 </div>
-                <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800">Sign in</button>
+                <button type="submit" className={`w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ${Loading && 'bg-orange-300'} `}>Sign in</button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                   Dont have an account yet? <Link href="/register" className="font-medium text-orange-600 hover:underline dark:text-orange-500">Sign up</Link>
                 </p>

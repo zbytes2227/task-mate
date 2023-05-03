@@ -4,14 +4,14 @@ import jwt from "jsonwebtoken";
 import { parse } from "cookie";
 import User from "@/models/Users";
 import Cluster from "@/models/Clusters";
-import Bunch from "./components/Bunch";
+import Bunch from "./components/Cluster";
 import Task from "./components/Task";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import Link from "next/link";
 
-const Dashboard = () => {
+const Dashboard = ({ Loading, setLoading }) => {
   const router = useRouter();
   const ref = useRef();
 
@@ -19,7 +19,7 @@ const Dashboard = () => {
   const [ValidUser, setValidUser] = useState(false)
   const [User, setUser] = useState('');
 
-  async function auth(){
+  async function auth() {
     const fetch_api = await fetch("/api/auth/", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -40,10 +40,6 @@ const Dashboard = () => {
     auth()
   }, [])
 
-
-
-
-
   // useEffect(() => {
   //   const handleRouteChange = (url) => {
   //     if (url !== router.asPath) {
@@ -58,13 +54,13 @@ const Dashboard = () => {
   //   };
   // }, [router]);
 
-  const [Loading, setLoading] = useState(false);
+  // const [Loading, setLoading] = useState(false);
   const [Cluster, setClusters] = useState([]);
   const [ActiveCluster, setActiveCluster] = useState("");
   const [Tasks, setTasks] = useState(null);
   const [newClusterName, setNewClusterName] = useState("");
   const [newTask, setnewTask] = useState("");
-  const [NewBunch, setNewBunch] = useState(false);
+  const [NewCluster, setNewCluster] = useState(false);
   const [IsCompleted, setIsCompleted] = useState(false);
 
   const changeCluster = (cluster_id) => {
@@ -76,25 +72,31 @@ const Dashboard = () => {
 
   };
 
-  async function getCluster() {
-    setLoading(true);
+  async function getCluster(load) {
+    if(load){setLoading(true)};
     const fetch_api = await fetch("/api/clusters/", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
 
     const data = await fetch_api.json();
-    setLoading(false);
+    setLoadingCluster(false)
     console.log(data.Clusters);
     if (data.success) {
       setClusters(data.Clusters);
     } else {
       setClusters(null);
     }
+    if(load){setLoading(false)};
   }
 
+  const [LoadingCluster, setLoadingCluster] = useState(false)
+
   async function addCluster() {
-    setNewBunch(true);
+    setLoadingCluster(true)
+    setNewCluster(true);
+    setNewClusterName("");
+    setClusterInput(false);
     const fetch_api = await fetch("/api/clusters/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -115,7 +117,6 @@ const Dashboard = () => {
         theme: "light",
       });
       setClusterInput(false);
-      setNewClusterName("");
     } else {
       toast.error(`${data.msg}`, {
         position: "top-center",
@@ -127,12 +128,17 @@ const Dashboard = () => {
         progress: undefined,
         theme: "light",
       });
-      setClusterInput(false);
     }
-    setNewBunch(false);
+    setNewCluster(false);
   }
 
+
+
+  const [LoadingTask, setLoadingTask] = useState(false);
+
   async function addTask() {
+    setLoadingTask(true)
+    setnewTask("");
     const fetch_api = await fetch("/api/task/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -144,19 +150,9 @@ const Dashboard = () => {
       }),
     });
     const data = await fetch_api.json();
+    setLoadingTask(false)
     if (data.success) {
-      toast.success(`${data.msg}`, {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
       setTasks(data.cluster);
-      setnewTask("");
     } else {
       toast.error(`${data.msg}`, {
         position: "top-center",
@@ -197,8 +193,8 @@ const Dashboard = () => {
   const [ClusterInput, setClusterInput] = useState(false);
 
   useEffect(() => {
-    getCluster();
-  }, [NewBunch]);
+    getCluster(false);
+  }, [NewCluster]);
 
 
   const handleLogout = async () => {
@@ -238,7 +234,7 @@ const Dashboard = () => {
 
 
   useEffect(() => {
-    getCluster();
+    // getCluster();
   }, [Tasks]);
 
   async function toggleComplete(taskId, isCompleted, nm) {
@@ -288,7 +284,7 @@ const Dashboard = () => {
                   src="/profile.png"
                   className="mx-auto object-cover rounded-full h-12 w-12 "
                 />
-                {User.user_details.name}
+                {User.user_details.name.slice(0, 10)}...
                 <div className={`absolute ${ProfileDropDown && 'hidden'} right-2 mt-48 z-10 w-48 text-left origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                   <div className="py-1" role="none">
                     {/* <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-0">{User.user_details.name}</a> */}
@@ -359,6 +355,14 @@ const Dashboard = () => {
                     </form>
                   </div>
                 )}
+                {Loading &&
+                  <div className="flex justify-center items-center h-[50vh]">
+
+                    <svg width="40" height="40" fill="currentColor" class="animate-spin" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M526 1394q0 53-37.5 90.5t-90.5 37.5q-52 0-90-38t-38-90q0-53 37.5-90.5t90.5-37.5 90.5 37.5 37.5 90.5zm498 206q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-704-704q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm1202 498q0 52-38 90t-90 38q-53 0-90.5-37.5t-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-964-996q0 66-47 113t-113 47-113-47-47-113 47-113 113-47 113 47 47 113zm1170 498q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-640-704q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm530 206q0 93-66 158.5t-158 65.5q-93 0-158.5-65.5t-65.5-158.5q0-92 65.5-158t158.5-66q92 0 158 66t66 158z">
+                      </path>
+                    </svg>
+                  </div>}
                 {Cluster ? (
                   Cluster.map((cluster, indx) => {
                     return (
@@ -374,6 +378,14 @@ const Dashboard = () => {
                 ) : (
                   <p>Unable to fetch Your Cluster</p>
                 )}
+                {LoadingCluster && <div className="flex cursor-pointer items-center justify-between p-3 mb-2 bg-orange-200 hover:bg-orange-200 rounded animate-pulse">
+                  <div className="p-2 bg-white rounded-lg">
+                    <Image alt='jghfgghfduh' src={'/192.png'} width={20} height={20} />
+                  </div>
+                  <div className="flex items-center justify-between w-full ml-2">
+                    <p className="text-slate-500"></p>
+                  </div>
+                </div>}
               </div>
             </div>
           </div>
@@ -446,6 +458,21 @@ const Dashboard = () => {
                     Tasks.tasks.map((task, index) => {
                       return <Task key={index} toggleComplete={toggleComplete} task={task} />;
                     })}
+                  {LoadingTask && <li className="py-2 text-gray-600 my-2 animate-pulse border-b-2 border-gray-100 bg-slate-100 rounded-lg shadow-lg cursor-pointer">
+                    <div className='rounded cursor-pointer'>
+                      <input className="hidden" type="checkbox" id="task_1" checked={false} />
+                      <label className="flex items-center justify-between h-10 px-2 cursor-pointer" htmlFor="task_1">
+                        <div className='flex'>
+                          <span className="flex items-center justify-center w-5 h-5 text-transparent border-2 border-gray-300 rounded-full">
+                            <svg className="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                              <path tabIndex="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                          </span>
+                          <span className="ml-4 text-md"></span>
+                        </div>
+                      </label>
+                    </div>
+                  </li>}
                 </ul>
                 <div></div>
               </div>

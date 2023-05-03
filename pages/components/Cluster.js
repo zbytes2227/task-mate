@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from "next/image";
 
-const Bunch = (props) => {
+const Cluster = (props) => {
   return (
     <div onClick={()=>props.changeCluster(props.clusterId)} className="flex cursor-pointer items-center justify-between p-3 mb-2 bg-orange-100 hover:bg-orange-200 rounded">
     <div className="p-2 bg-white rounded-lg">
@@ -19,4 +19,4 @@ const Bunch = (props) => {
   )
 }
 
-export default Bunch
+export default Cluster

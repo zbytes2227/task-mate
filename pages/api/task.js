@@ -10,7 +10,7 @@ const handler = async (req, res) => {
     
     
     if (req.method == 'PUT') {
-        console.log(req.body);
+        // console.log(req.body);
         let cluster_id = req.body.cluster_id
         let task_id = req.body.task_id
         let is_completed = req.body.is_completed
@@ -33,27 +33,24 @@ const handler = async (req, res) => {
 
     if (req.method == 'POST') {
         // console.log(req.cluster_id);
-        const cluster = await Cluster.findOne({ _id: req.body.cluster_id })
-        if (!cluster) {
-            console.error('err');
-            res.json({ success: false, msg: "ERROR" });
-        } else {
-            // console.log(cluster);
-            let newTask = {
-                task_name: req.body.task_name,
-                description: req.body.description,
-                is_completed: req.body.is_completed,
+            const cluster = await Cluster.findOne({ _id: req.body.cluster_id })
+            if (!cluster) {
+                console.error('err');
+                res.json({ success: false, msg: "ERROR" });
+            } else {
+                // console.log(cluster);
+                let newTask = {
+                    task_name: req.body.task_name,
+                    description: req.body.description,
+                    is_completed: req.body.is_completed,
+                }
+                cluster.tasks.push(newTask);
+                let n_cluster = await cluster.save();
+                res.json({ success: true, msg: "Task Added Successfully", cluster: n_cluster });
             }
-            cluster.tasks.push(newTask);
-            let n_cluster = await cluster.save();
-            res.json({ success: true, msg: "Task Added Successfully", cluster: n_cluster });
         }
-
-
-
     }
-}
-
-
-
-export default connectDb(handler);
+    
+    
+    
+    export default connectDb(handler);

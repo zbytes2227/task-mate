@@ -5,11 +5,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const Register = () => {
+const Register = ({Loading, setLoading}) => {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
-    const [Loading, setLoading] = useState(false);
     const [response, setResponse] = useState("");
 
     const router = useRouter();
@@ -93,7 +92,7 @@ const Register = () => {
                                     </div>
 
                                 </div>
-                                <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800">Sign up</button>
+                                <button type="submit" className={`w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 ${Loading && 'bg-green-100'} `}>Sign up</button>
                                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                     Already have an account ? <Link href="/login" className="font-medium text-orange-600 hover:underline dark:text-orange-500">Login here</Link>
                                 </p>
