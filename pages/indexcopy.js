@@ -111,3 +111,39 @@ export default function Home() {
     </>
   )
 }
+
+
+// export async function getServerSideUser(context) {
+//   // Parse cookies from the request headers
+//   const cookies = parse(context.req.headers.cookie || "");
+//   const token = cookies.access_token;
+
+//   try {
+//     // Verify the JWT token
+//     let decoded = await jwt.verify(token, process.env.JWT_SECRET);
+//     // console.log(decoded._id);
+//     let user = await User.findOne({ _id: decoded._id });
+//     // let user_Cluster = await Cluster.findOne({ user_id: user._id });
+//     // console.log(user_Cluster);
+
+//     if (user) {
+//       decoded = { name: user.name, email: user.email };
+//       // console.log(decoded);
+//     }
+
+//     return {
+//       User: {
+//         user_details: decoded,
+//         // Cluster: user_Cluster.Cluster
+//       },
+//     };
+//   } catch (err) {
+//     // Handle invalid or expired token
+//     return {
+//       redirect: {
+//         destination: "/login", // Redirect to login page if the token is invalid or expired
+//         permanent: false,
+//       },
+//     };
+//   }
+// }
