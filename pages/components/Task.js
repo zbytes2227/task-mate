@@ -11,7 +11,7 @@ const Task = (props) => {
 	const [dropDown, setdropDown] = useState(true);
 	const [State1, setState1] = useState(props.task && props.task.is_completed)
 	return (
-  <li className="py-2 text-gray-600 my-2 border-b-2 border-gray-100 bg-slate-50 rounded-lg shadow-lg cursor-pointer">
+  <li className="py-2 text-gray-600 my-2 border-b-2 dark:border-gray-800 border-gray-100 dark:text-white bg-slate-50 dark:bg-gray-700 rounded-lg shadow-lg cursor-pointer">
 				<div className='rounded cursor-pointer'>
 					<input className="hidden" type="checkbox" id="task_1" checked={State1} />
 					<label className="flex items-center justify-between h-10 px-2 cursor-pointer" htmlFor="task_1">
@@ -29,10 +29,10 @@ const Task = (props) => {
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-three-dots-vertical" viewBox="0 0 16 16">
 								<path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
 							</svg>
-							<div className={`absolute ${dropDown && 'hidden'} right-8 z-10 w-48 text-left origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+							<div className={`absolute ${dropDown && 'hidden'} right-8 z-10 w-48 text-left origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
 								<div className="py-1" role="none">
-									<a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-0">Edit Task</a>
-									<a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100 hover:text-red-600" role="menuitem" tabIndex="-1" id="menu-item-1">Delete</a>
+									<a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100 hover:bg-slate-100 dark:hover:bg-gray-600 dark:text-white" role="menuitem" tabIndex="-1" id="menu-item-0">Edit Task</a>
+									<a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100 hover:text-red-600 hover:bg-slate-100 dark:hover:bg-gray-600 dark:text-white" role="menuitem" tabIndex="-1" id="menu-item-1">Delete</a>
 									{/* <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-2">Remove from here</a>
 						<button type="submit" className="hover:bg-slate-100 text-gray-700 block w-full px-4 py-2 text-left text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">Sign out</button> */}
 								</div>

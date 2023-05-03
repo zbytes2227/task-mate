@@ -8,6 +8,7 @@ export default function App({ Component, pageProps }) {
   const [Loading, setLoading] = useState(false)
   const router = useRouter();
 
+
   useEffect(() => {
     router.events.on('routeChangeStart', () => {
       setProgress(40)

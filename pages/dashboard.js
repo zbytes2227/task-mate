@@ -292,18 +292,18 @@ const Dashboard = ({ Loading, setLoading }) => {
 
   return (
     <>{ValidUser &&
-      <div className="flex p-1 h-[100vh]">
+      <div className="flex p-1 h-[100vh] dark:bg-gray-900">
         <ToastContainer />
 
         <div
           ref={ref}
-          className="flex flex-col justify-between w-full md:w-2/3 fixed sm:relative top-0 left-0 bg-white lg:w-1/3 transform transition-transform  sm:translate-x-0 sm:z-20 sm:overflow-x-scroll"
+          className="flex flex-col justify-between w-full md:w-2/3 fixed sm:relative top-0 left-0  bg-white lg:w-1/3 transform transition-transform dark:bg-gray-900 sm:translate-x-0 sm:z-20 sm:overflow-x-scroll"
         >
           {/* sm:translate-x-full */}
           <div>
-            <div className=" flex justify-between h-[10vh] px-3 mx-2 bg-white shadow-lg rounded-b-xl">
+            <div className=" flex justify-between h-[10vh] px-3 mx-2 bg-white dark:bg-gray-800 shadow-lg rounded-b-xl">
               <div className="flex justify-start items-center">
-                <h1 className="font-extrabold leading-tight text-left text-5xl md:text-6xl">
+                <h1 className="font-extrabold leading-tight text-left dark:text-white text-5xl md:text-6xl">
                   <span className="text-orange-600">TASK</span>MATE
                 </h1>
                 {/* <h1 className="font-extrabold leading-tight text-left text-lg md:text-2xl">
@@ -314,7 +314,7 @@ const Dashboard = ({ Loading, setLoading }) => {
 
               <div onMouseOver={() => setProfileDropDown(false)} onMouseLeave={() => setProfileDropDown(true)}
                 href="#"
-                className="flex items-center flex-col justify-center cursor-pointer "
+                className="flex items-center flex-col justify-center cursor-pointer dark:text-white"
               >
                 <img
                   alt="profil"
@@ -322,12 +322,12 @@ const Dashboard = ({ Loading, setLoading }) => {
                   className="mx-auto object-cover rounded-full h-12 w-12 "
                 />
                 {User.user_details.name.slice(0, 10)}...
-                <div className={`absolute ${ProfileDropDown && 'hidden'} right-2 mt-48 z-10 w-48 text-left origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+                <div className={`absolute ${ProfileDropDown && 'hidden'} right-2 mt-48 z-10 w-48 text-left origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-700`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                   <div className="py-1" role="none">
                     {/* <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-0">{User.user_details.name}</a> */}
-                    <Link href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-1">{User.user_details.email}</Link>
-                    <Link href="/account" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-2">Edit account</Link>
-                    <button onClick={handleLogout} type="submit" className="hover:bg-slate-100  hover:text-red-600 text-gray-700 block w-full px-4 py-2 text-left text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">Sign out</button>
+                    <Link href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-gray-600 dark:text-white" role="menuitem" tabIndex="-1" id="menu-item-1">{User.user_details.email}</Link>
+                    <Link href="/account" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-gray-600 dark:text-white" role="menuitem" tabIndex="-1" id="menu-item-2">Edit account</Link>
+                    <button onClick={handleLogout} type="submit" className="hover:bg-slate-100  hover:text-red-600 text-gray-700 block w-full px-4 py-2 text-left text-sm dark:hover:bg-gray-600 dark:text-white" role="menuitem" tabIndex="-1" id="menu-item-3">Sign out</button>
                   </div>
 
 
@@ -340,19 +340,20 @@ const Dashboard = ({ Loading, setLoading }) => {
             </div>
 
             <div className="flex justify-center flex-col items-start p-2">
-              <div className="relative w-full p-4  bg-white shadow-lg rounded-xl overflow-y-scroll h-[85vh]">
+              <div className="relative w-full p-4 bg-white shadow-lg rounded-xl overflow-y-scroll h-[85vh] dark:bg-gray-800">
                 <div className="flex items-center justify-between w-full mb-6">
-                  <p className="text-xl font-medium text-gray-800  ">
+                  <p className="text-xl font-medium text-gray-800 dark:text-white ">
                     All Cluster
                   </p>
                   <button
                     onClick={() => setClusterInput(true)}
-                    className="flex items-center text-gray-800 border-0  hover:text-black focus:outline-none"
+                    className="flex items-center text-gray-800 border-0 text-black hover:text-black focus:outline-none"
                   >
                     <svg
                       width="24"
                       height="24"
                       fill="currentColor"
+                      className="dark:text-white text-black"
                       viewBox="0 0 1792 1792"
                       xmlns="http://www.w3.org/2000/svg"
                     >
@@ -364,18 +365,18 @@ const Dashboard = ({ Loading, setLoading }) => {
                   <div className="mb-4">
                     <label
                       htmlFor="default-search"
-                      className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+                      className="mb-2 text-sm font-medium text-gray-900 sr-only"
                     >
                       Enter new Cluster name
                     </label>
                     <form className="relative" onSubmit={(e) => { e.preventDefault(), addCluster() }}>
-                      <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                      <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none ">
                         {" "}
                       </div>
                       <input
                         type="text"
                         id="default-text"
-                        className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 outline-none focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="block font-medium w-full p-4 pl-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-orange-500 outline-none focus:border-orange-500 dark:bg-gray-800 text-lg dark:text-white"
                         placeholder="New Cluster name..."
                         required={true}
                         value={newClusterName}
@@ -385,7 +386,7 @@ const Dashboard = ({ Loading, setLoading }) => {
                       />
                       <button
                         type="submit"
-                        className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        className="text-white absolute right-2.5 bottom-3.5 bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-4 py-2"
                       >
                         Create
                       </button>
@@ -415,7 +416,7 @@ const Dashboard = ({ Loading, setLoading }) => {
                 ) : (
                   <p>Unable to fetch Your Cluster</p>
                 )}
-                {LoadingCluster && <div className="flex cursor-pointer items-center justify-between p-3 mb-2 bg-orange-200 hover:bg-orange-200 rounded animate-pulse">
+                {LoadingCluster && <div className="flex cursor-pointer items-center justify-between p-3 mb-2 bg-orange-200 hover:bg-orange-200 rounded animate-pulse dark:bg-orange-400">
                   <div className="p-2 bg-white rounded-lg">
                     <Image alt='jghfgghfduh' src={'/192.png'} width={20} height={20} />
                   </div>
@@ -442,32 +443,32 @@ const Dashboard = ({ Loading, setLoading }) => {
         }
         {Tasks && (
           <div className="w-full sm:w-2/3  md:block m-1">
-            <div className="w-full bg-white shadow-xl border-2 rounded-2xl dark:bg-gray-100 h-[95vh]">
-              <div className="p-3 text-center text-xl flex justify-between ">
+            <div className="w-full bg-white shadow-xl dark:shadow-lg rounded-2xl h-[95vh] dark:bg-gray-800">
+              <div className="p-3 text-center text-xl font-semibold flex justify-between dark:text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" className="bi bi-arrow-left block sm:hidden" viewBox="0 0 16 16" onClick={toggleClusterMenu}>
                   <path tabIndex="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
                 </svg>
                 {" "}
                 {Tasks.cluster_name}
                 <div onClick={() => setClusterdropDown(false)} onMouseLeave={() => setClusterdropDown(true)} >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" className="bi bi-gear" viewBox="0 0 16 16">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" className="bi bi-gear cursor-pointer" viewBox="0 0 16 16">
                     <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
                     <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
                   </svg>
-                  <div className={`absolute ${ClusterdropDown && 'hidden'} right-2 z-10 w-48 text-left origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+                  <div className={`absolute ${ClusterdropDown && 'hidden'} right-2 z-10 w-48 text-left origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-700`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                     <div className="py-1" role="none">
                       {/* <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-0">{User.user_details.name}</a> */}
-                      <Link href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-1">Edit Cluster</Link>
-                      <Link href="/account" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-2">Remove all tasks</Link>
-                      <button onClick={deleteCluster} type="button" className="hover:bg-slate-100  hover:text-red-600 text-gray-700 block w-full px-4 py-2 text-left text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">Delete Cluster</button>
+                      <Link href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100 hover:bg-slate-100 dark:hover:bg-gray-600 dark:text-white" role="menuitem" tabIndex="-1" id="menu-item-1">Edit Cluster</Link>
+                      <Link href="/account" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100 hover:bg-slate-100 dark:hover:bg-gray-600 dark:text-white" role="menuitem" tabIndex="-1" id="menu-item-2">Remove all tasks</Link>
+                      <button onClick={deleteCluster} type="button" className="hover:bg-slate-100  hover:text-red-600 text-gray-700 block w-full px-4 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-gray-600 dark:text-white" role="menuitem" tabIndex="-1" id="menu-item-3">Delete Cluster</button>
                     </div>
                   </div>
                 </div>
               </div>
               <form className="w-full" onSubmit={(e) => { e.preventDefault(), addTask() }}  >
-                <div className="flex items-center border-2 border-orange-300 py-2 mx-3 rounded-md">
+                <div className="flex items-center border-2 border-orange-300 dark:border-gray-500 py-2 mx-3 rounded-md">
                   <input
-                    className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                    className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none dark:text-white text-md"
                     type="text"
                     placeholder="Type task name here...."
                     value={newTask}
@@ -484,7 +485,7 @@ const Dashboard = ({ Loading, setLoading }) => {
                 </div>
               </form>
 
-              <p className="p-4 font-bold text-black text-md ">
+              <p className="p-4 font-bold text-black text-md dark:text-white">
                 All Tasks
                 {/* <span className="ml-2 text-sm text-gray-800 ">(05)</span> */}
               </p>
@@ -495,7 +496,7 @@ const Dashboard = ({ Loading, setLoading }) => {
                     Tasks.tasks.map((task, index) => {
                       return <Task key={index} toggleComplete={toggleComplete} task={task} />;
                     })}
-                  {LoadingTask && <li className="py-2 text-gray-600 my-2 animate-pulse border-b-2 border-gray-100 bg-slate-100 rounded-lg shadow-lg cursor-pointer">
+                  {LoadingTask && <li className="py-2 text-gray-600 dark:bg-gray-700 my-2 animate-pulse bg-slate-100 rounded-lg shadow-lg cursor-pointer">
                     <div className='rounded cursor-pointer'>
                       <input className="hidden" type="checkbox" id="task_1" checked={false} />
                       <label className="flex items-center justify-between h-10 px-2 cursor-pointer" htmlFor="task_1">
