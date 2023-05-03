@@ -11,9 +11,37 @@ import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import Link from "next/link";
 
-const Dashboard = (props) => {
+const Dashboard = () => {
   const router = useRouter();
   const ref = useRef();
+
+
+  const [ValidUser, setValidUser] = useState(false)
+  const [User, setUser] = useState('');
+
+  async function auth(){
+    const fetch_api = await fetch("/api/auth/", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const data = await fetch_api.json();
+    console.log(data);
+    if (data.success) {
+      setValidUser(true);
+      setUser(data)
+    } else {
+      router.push('/login')
+      setValidUser(false);
+    }
+  }
+
+  useEffect(() => {
+    auth()
+  }, [])
+
+
+
 
 
   // useEffect(() => {
@@ -230,7 +258,7 @@ const Dashboard = (props) => {
 
 
   return (
-    <>
+    <>{ValidUser &&
       <div className="flex p-1 h-[100vh]">
         <ToastContainer />
 
@@ -247,7 +275,7 @@ const Dashboard = (props) => {
                 </h1>
                 {/* <h1 className="font-extrabold leading-tight text-left text-lg md:text-2xl">
                   <span className="text-indigo-600">Welcome back</span>{" "}
-                  {props.user_details.name}
+                  {User.user_details.name}
                 </h1> */}
               </div>
 
@@ -260,11 +288,11 @@ const Dashboard = (props) => {
                   src="/profile.png"
                   className="mx-auto object-cover rounded-full h-12 w-12 "
                 />
-                {props.user_details.name}
+                {User.user_details.name}
                 <div className={`absolute ${ProfileDropDown && 'hidden'} right-2 mt-48 z-10 w-48 text-left origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                   <div className="py-1" role="none">
-                    {/* <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-0">{props.user_details.name}</a> */}
-                    <Link href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-1">{props.user_details.email}</Link>
+                    {/* <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-0">{User.user_details.name}</a> */}
+                    <Link href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-1">{User.user_details.email}</Link>
                     <Link href="/account" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-2">Edit account</Link>
                     <button onClick={handleLogout} type="submit" className="hover:bg-slate-100  hover:text-red-600 text-gray-700 block w-full px-4 py-2 text-left text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">Sign out</button>
                   </div>
@@ -379,7 +407,7 @@ const Dashboard = (props) => {
                   </svg>
                   <div className={`absolute ${ClusterdropDown && 'hidden'} right-2 z-10 w-48 text-left origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                     <div className="py-1" role="none">
-                      {/* <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-0">{props.user_details.name}</a> */}
+                      {/* <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-0">{User.user_details.name}</a> */}
                       <Link href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-1">Edit Cluster</Link>
                       <Link href="/account" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-2">Remove all tasks</Link>
                       <button type="submit" className="hover:bg-slate-100  hover:text-red-600 text-gray-700 block w-full px-4 py-2 text-left text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">Delete Cluster</button>
@@ -424,44 +452,44 @@ const Dashboard = (props) => {
             </div>
           </div>
         )}
-      </div>
+      </div>}
     </>
   );
 };
 
-export async function getServerSideProps(context) {
-  // Parse cookies from the request headers
-  const cookies = parse(context.req.headers.cookie || "");
-  const token = cookies.access_token;
+// export async function getServerSideUser(context) {
+//   // Parse cookies from the request headers
+//   const cookies = parse(context.req.headers.cookie || "");
+//   const token = cookies.access_token;
 
-  try {
-    // Verify the JWT token
-    let decoded = await jwt.verify(token, process.env.JWT_SECRET);
-    // console.log(decoded._id);
-    let user = await User.findOne({ _id: decoded._id });
-    // let user_Cluster = await Cluster.findOne({ user_id: user._id });
-    // console.log(user_Cluster);
+//   try {
+//     // Verify the JWT token
+//     let decoded = await jwt.verify(token, process.env.JWT_SECRET);
+//     // console.log(decoded._id);
+//     let user = await User.findOne({ _id: decoded._id });
+//     // let user_Cluster = await Cluster.findOne({ user_id: user._id });
+//     // console.log(user_Cluster);
 
-    if (user) {
-      decoded = { name: user.name, email: user.email };
-      // console.log(decoded);
-    }
+//     if (user) {
+//       decoded = { name: user.name, email: user.email };
+//       // console.log(decoded);
+//     }
 
-    return {
-      props: {
-        user_details: decoded,
-        // Cluster: user_Cluster.Cluster
-      },
-    };
-  } catch (err) {
-    // Handle invalid or expired token
-    return {
-      redirect: {
-        destination: "/login", // Redirect to login page if the token is invalid or expired
-        permanent: false,
-      },
-    };
-  }
-}
+//     return {
+//       User: {
+//         user_details: decoded,
+//         // Cluster: user_Cluster.Cluster
+//       },
+//     };
+//   } catch (err) {
+//     // Handle invalid or expired token
+//     return {
+//       redirect: {
+//         destination: "/login", // Redirect to login page if the token is invalid or expired
+//         permanent: false,
+//       },
+//     };
+//   }
+// }
 
 export default Dashboard;
