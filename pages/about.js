@@ -36,19 +36,19 @@ const About = () => {
                             <div className='max-w-3xl'>
 
                             <p className="font-medium text-white leading-tight text-center mt-8 text-2xl md:text-xl">
-                                Welcome to Task Mate, a web app designed to provide a simple solution for complex problems. I'm thrilled to introduce myself as the creator of this app. My name is Ujjwal(ZBytes), and I'm a full-stack developer with a passion for creating intuitive and practical solutions for users.
+                                Welcome to Task Mate, a web app designed to provide a simple solution for complex problems. I&apos;m thrilled to introduce myself as the creator of this app. My name is Ujjwal(ZBytes), and I&apos;m a full-stack developer with a passion for creating intuitive and practical solutions for users.
                             </p>
                             <p className="font-medium text-white leading-tight text-center mt-8 text-2xl md:text-xl">
                                 Task Mate was developed as a project to demonstrate my proficiency in Next.js, MongoDB, and Tailwind CSS. As a developer who loves to learn, I take pride in incorporating the latest technologies and best practices into my projects.
                             </p>
                             <p className="font-medium text-white leading-tight text-center mt-8 text-2xl md:text-xl">
-                                Collaboration is an integral part of my philosophy, and I had the pleasure of working with my coding partner, Abhijeet, on this project. Our teamwork allowed us to create a comprehensive and functional app that we're proud to share with you.
+                                Collaboration is an integral part of my philosophy, and I had the pleasure of working with my coding partner, Abhijeet, on this project. Our teamwork allowed us to create a comprehensive and functional app that we&apos;re proud to share with you.
                             </p>
                             <p className="font-medium text-white leading-tight text-center mt-8 text-2xl md:text-xl">
                                 Task Mate offers a straightforward and effective way to manage your tasks and boost your productivity. With its intuitive user interface and powerful features, Task Mate makes it easy to prioritize your to-do list and track your progress.
                             </p>
                             <p className="font-medium text-white leading-tight text-center mt-8 text-2xl md:text-xl">
-                                I'm excited to share Task Mate with you and invite you to join me on this journey. Feel free to connect with me on LinkedIn or email me directly to share your feedback or learn more about the app. Thank you for your interest in Task Mate, and I look forward to hearing from you.
+                                I&apos;m excited to share Task Mate with you and invite you to join me on this journey. Feel free to connect with me on LinkedIn or email me directly to share your feedback or learn more about the app. Thank you for your interest in Task Mate, and I look forward to hearing from you.
                             </p>
                             </div>
                             <span className="font-extrabold text-white leading-tight text-center text-3xl md:text-4xl">
