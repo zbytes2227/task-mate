@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Navbar from './components/Navbar';
 
 const Login = ({ Loading, setLoading }) => {
   const [email, setEmail] = useState('');
@@ -81,7 +82,8 @@ const Login = ({ Loading, setLoading }) => {
         <div className="absolute inset-0 bg-gray-900 bg-opacity-30 backdrop-filter backdrop-blur-sm"></div> */}
       <section className="h-[100vh] dark:bg-gray-900">
         <ToastContainer />
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <Navbar />
+        <div className="flex flex-col pt-20 sm:pt-0 items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
             <img className="w-16 h-16 mr-2 rounded-full" src="/192.png" alt="logo" />
             Task Mate

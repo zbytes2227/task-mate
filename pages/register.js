@@ -3,9 +3,10 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Navbar from './components/Navbar';
 
 
-const Register = ({Loading, setLoading}) => {
+const Register = ({ Loading, setLoading }) => {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
@@ -14,61 +15,62 @@ const Register = ({Loading, setLoading}) => {
     const router = useRouter();
 
     async function registerUser(e) {
-        try{
-        e.preventDefault();
-        setLoading(true);
-        const fetch_api = await fetch("/api/register/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                name: name,
-                email: email,
-                password: password,
-            }),
-        });
+        try {
+            e.preventDefault();
+            setLoading(true);
+            const fetch_api = await fetch("/api/register/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    password: password,
+                }),
+            });
 
-        const data = await fetch_api.json();
-        setLoading(false);
-        if (data.success) {
-            toast.success(`${data.msg}`, {
-                position: "top-center",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
-            setEmail('');
-            setPassword('');
-            setName('')
-            setTimeout(() => {
-                router.push('/dashboard');
-            }, 1000);
-        } else {
-            toast.error(`${data.msg}`, {
-                position: "top-center",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
-        }  } catch (error) {
+            const data = await fetch_api.json();
+            setLoading(false);
+            if (data.success) {
+                toast.success(`${data.msg}`, {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                setEmail('');
+                setPassword('');
+                setName('')
+                setTimeout(() => {
+                    router.push('/dashboard');
+                }, 1000);
+            } else {
+                toast.error(`${data.msg}`, {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+        } catch (error) {
             toast.error(`You are offline`, {
-              position: "top-center",
-              autoClose: 3300,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
+                position: "top-center",
+                autoClose: 3300,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
             });
-          }
+        }
     }
 
 
@@ -76,7 +78,9 @@ const Register = ({Loading, setLoading}) => {
         <>
             <section className="bg-gray-50 dark:bg-gray-900 h-[100vh]">
                 <ToastContainer />
-                <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+                <Navbar />
+
+                <div className="flex flex-col pt-20 sm:pt-0 items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                     <Link href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                         <img className="w-16 h-16 mr-2 rounded-full" src="/192.png" alt="logo" />
                         Task Mate
@@ -87,7 +91,7 @@ const Register = ({Loading, setLoading}) => {
                                 Sign up to Task Mate
                             </h1>
                             <form className="space-y-4 md:space-y-6" onSubmit={registerUser}>
-                            <div>
+                                <div>
                                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
                                     <input type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="" value={name} onChange={(e) => { setName(e.target.value) }} />
                                 </div>

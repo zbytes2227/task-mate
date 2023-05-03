@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Typewriter } from 'react-simple-typewriter'
+import Navbar from './components/Navbar'
 
 export default function Home() {
 
@@ -17,43 +18,13 @@ export default function Home() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
       <div className="relative h-screen overflow-hidden bg-indigo-900">
             <img alt='s' src="bg12.jpg" className="absolute object-cover w-full h-full" />
             <div className="absolute inset-0 bg-black opacity-25">
             </div>
         <div className="absolute inset-0 bg-gray-900 bg-opacity-30 backdrop-filter backdrop-blur-md"></div>
 
-            <header className="absolute top-0 left-0 right-0 z-20">
-                <nav className="container px-6 py-4 mx-auto md:px-12">
-                    <div className="items-center justify-center md:flex">
-                        <div className="flex items-center justify-between">
-                        </div>
-                        <div className="items-center text-center md:flex ">
-                            <Link href="/" className="mx-3 text-lg text-white uppercase cursor-pointer hover:text-gray-300">
-                                Home
-                            </Link>
-                            <Link href="/about" className="mx-3 text-lg text-white uppercase cursor-pointer hover:text-gray-300">
-                                About
-                            </Link>
-                            <Link href="/dashboard" className="mx-3 text-lg text-white uppercase cursor-pointer hover:text-gray-300">
-                            Dashboard
-                            </Link>
-                        </div>
-                    </div>
-                </nav>
-            </header>
+          <Navbar/>
             <div className="container relative z-10 flex items-center px-6 py-32 mx-auto md:px-12 xl:py-40">
                 <div className="relative z-10 flex flex-col items-center w-full">
                 <div className='flex flex-col justify-center items-center'>
@@ -79,7 +50,6 @@ export default function Home() {
             >
               <Typewriter
                 words={['Get Started','Register', 'Login', 'Manage Tasks']}
-                loop={5}
                 cursor
                 cursorStyle='|'
                 typeSpeed={70}
