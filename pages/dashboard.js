@@ -16,19 +16,19 @@ const Dashboard = (props) => {
   const ref = useRef();
 
 
-  useEffect(() => {
-    const handleRouteChange = (url) => {
-      if (url !== router.asPath) {
-        toggleClusterMenu();
-        router.events.emit("routeChangeError");
-        router.push("/dashboard");
-      }
-    };
-    router.events.on("beforeHistoryChange", handleRouteChange);
-    return () => {
-      router.events.off("beforeHistoryChange", handleRouteChange);
-    };
-  }, [router]);
+  // useEffect(() => {
+  //   const handleRouteChange = (url) => {
+  //     if (url !== router.asPath) {
+  //       toggleClusterMenu();
+  //       router.events.emit("routeChangeError");
+  //       router.push("/dashboard");
+  //     }
+  //   };
+  //   router.events.on("beforeHistoryChange", handleRouteChange);
+  //   return () => {
+  //     router.events.off("beforeHistoryChange", handleRouteChange);
+  //   };
+  // }, [router]);
 
   const [Loading, setLoading] = useState(false);
   const [Cluster, setClusters] = useState([]);
