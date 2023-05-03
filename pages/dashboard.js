@@ -234,7 +234,7 @@ const Dashboard = ({ Loading, setLoading }) => {
 
 
   useEffect(() => {
-    // getCluster();
+    getCluster(false);
   }, [Tasks]);
 
   async function toggleComplete(taskId, isCompleted, nm) {
