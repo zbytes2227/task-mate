@@ -26,7 +26,7 @@ const Dashboard = ({ Loading, setLoading }) => {
     });
 
     const data = await fetch_api.json();
-    console.log(data);
+    // console.log(data);
     if (data.success) {
       setValidUser(true);
       setUser(data)
@@ -67,7 +67,7 @@ const Dashboard = ({ Loading, setLoading }) => {
     setActiveCluster(cluster_id);
     let tasks = Cluster.find((obj) => obj._id === cluster_id);
     setTasks(tasks);
-    console.log(tasks);
+    // console.log(tasks);
     toggleClusterMenu();
 
   };
@@ -81,7 +81,7 @@ const Dashboard = ({ Loading, setLoading }) => {
 
     const data = await fetch_api.json();
     setLoadingCluster(false)
-    console.log(data.Clusters);
+    // console.log(data.Clusters);
     if (data.success) {
       setClusters(data.Clusters);
     } else {
@@ -183,7 +183,7 @@ const Dashboard = ({ Loading, setLoading }) => {
     } else {
       if (ref.current.classList.contains("translate-x-full")) {
         show();
-        console.log("wordked ");
+        // console.log("wordked ");
       } else if (!ref.current.classList.contains("translate-x-full")) {
         hide();
       }
@@ -252,6 +252,43 @@ const Dashboard = ({ Loading, setLoading }) => {
   const [ProfileDropDown, setProfileDropDown] = useState(true);
   const [ClusterdropDown, setClusterdropDown] = useState(true);
 
+
+  const deleteCluster=async()=>{
+    changeCluster(null)
+    const fetch_api = await fetch("/api/clusters/", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        cluster_id: ActiveCluster,
+      }),
+    });
+    const data = await fetch_api.json();
+    console.log(data);
+    setClusterdropDown(true)
+    if (data.success) {
+      toast.success(`${data.msg}`, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
+      toast.error(`${data.msg}`, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }
 
   return (
     <>{ValidUser &&
@@ -422,7 +459,7 @@ const Dashboard = ({ Loading, setLoading }) => {
                       {/* <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-0">{User.user_details.name}</a> */}
                       <Link href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-1">Edit Cluster</Link>
                       <Link href="/account" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-2">Remove all tasks</Link>
-                      <button type="submit" className="hover:bg-slate-100  hover:text-red-600 text-gray-700 block w-full px-4 py-2 text-left text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">Delete Cluster</button>
+                      <button onClick={deleteCluster} type="button" className="hover:bg-slate-100  hover:text-red-600 text-gray-700 block w-full px-4 py-2 text-left text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">Delete Cluster</button>
                     </div>
                   </div>
                 </div>

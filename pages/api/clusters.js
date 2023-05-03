@@ -6,7 +6,17 @@ import connectDb from "@/middleware/mongoose";
 
 
 const handler = async (req, res) => {
-    
+    if(req.method == 'PUT'){
+        try {
+            let delete_cluster = await Cluster.findByIdAndDelete({_id: req.body.cluster_id});
+            return res.json({ success: true, msg: "Cluster Deleted Successfuly" });
+        } catch (error) {
+            
+            return res.json({ success: false, msg: "Server error: Unable to Delete your Clusters" });
+        }
+        // console.log(delete_cluster);
+    }
+
     if (req.method == 'GET') {
             const cookies = parse(req.headers.cookie || "");
             const token = cookies.access_token;
