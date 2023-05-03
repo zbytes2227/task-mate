@@ -73,7 +73,7 @@ export default function Home() {
             <span className="font-extrabold text-white leading-tight text-center text-3xl md:text-4xl">
              
             </span>
-            <Link href={'/register'}
+            <Link href={'/login'}
               className="bg-orange-600 hover:bg-orange-700  mt-4 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
               type="button"
             >

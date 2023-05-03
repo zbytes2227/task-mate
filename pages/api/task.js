@@ -10,11 +10,12 @@ const handler = async (req, res) => {
 
     if (req.method == 'PUT') {
         console.log(req.body);
-        let cluster_id = req.body.cluster_id;
-        let task_id = req.body.task_id;
         let req_method = req.body.method;
-        
-        if (req_method) {
+
+
+        if (req_method === 'UPDATE_TASK') {
+            let cluster_id = req.body.cluster_id;
+            let task_id = req.body.task_id;
             let is_completed = req.body.is_completed
             Cluster.updateOne(
                 { _id: cluster_id, "tasks._id": task_id },
@@ -27,10 +28,25 @@ const handler = async (req, res) => {
                     res.json({ success: false, msg: "ERROR" });
                     console.log(error);
                 });
-        } else {
+        } else if (req_method === 'DELETE_TASK') {
+            let cluster_id = req.body.cluster_id;
+            let task_id = req.body.task_id;
             Cluster.updateOne(
                 { _id: cluster_id },
                 { $pull: { tasks: { _id: task_id } } }
+            )
+                .then(result => {
+                    res.json({ success: true, msg: "DONE", res: result });
+                })
+                .catch(error => {
+                    res.json({ success: false, msg: "ERROR" });
+                    console.log(error);
+                });
+        } else if (req_method === 'DELETE_ALL') {
+            let cluster_id = req.body.cluster_id;
+            Cluster.updateOne(
+                { _id: cluster_id },
+                { $set: { tasks: [] } }
             )
                 .then(result => {
                     res.json({ success: true, msg: "DONE", res: result });

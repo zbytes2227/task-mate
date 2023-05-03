@@ -5,9 +5,8 @@ export default function Document() {
     <Html lang="en">
       <Head >
         <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/icon.png"></link>
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png"></link>
         <meta name="theme-color" content="#F97316" />
-        <title>Task Mate</title>
       </Head>
       <body>
         <Main />

@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Login = ({Loading,setLoading}) => {
+const Login = ({ Loading, setLoading }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [response, setResponse] = useState("");
@@ -12,39 +12,52 @@ const Login = ({Loading,setLoading}) => {
   const router = useRouter();
 
   async function loginUser(e) {
-    setLoading(true);
-    e.preventDefault();
-    const fetch_api = await fetch("/api/login/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    });
-
-    const data = await fetch_api.json();
-    if (data.success) {
-      toast.success(`${data.msg}`, {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+    try {
+      setLoading(true);
+      e.preventDefault();
+      const fetch_api = await fetch("/api/login/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
       });
-      setEmail('');
-      setPassword('');
-      setLoading(false);
-      setTimeout(() => {
-        router.push('/dashboard');
-      }, 1000);
-    } else {
-      toast.error(`${data.msg}`, {
+
+      const data = await fetch_api.json();
+      if (data.success) {
+        toast.success(`${data.msg}`, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setEmail('');
+        setPassword('');
+        setLoading(false);
+        setTimeout(() => {
+          router.push('/dashboard');
+        }, 1000);
+      } else {
+        toast.error(`${data.msg}`, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      toast.error(`You are offline`, {
         position: "top-center",
-        autoClose: 2000,
+        autoClose: 3300,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -61,7 +74,7 @@ const Login = ({Loading,setLoading}) => {
 
 
 
-{/* <div className="relative h-screen overflow-hidden bg-indigo-900">
+      {/* <div className="relative h-screen overflow-hidden bg-indigo-900">
             <img alt='s' src="/bg.jpg" className="absolute object-cover w-full h-full" />
             <div className="absolute inset-0 bg-black opacity-25">
             </div>
@@ -101,7 +114,7 @@ const Login = ({Loading,setLoading}) => {
           </div>
         </div>
       </section>
-{/* </div> */}
+      {/* </div> */}
     </>
   )
 }

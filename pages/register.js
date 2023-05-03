@@ -14,6 +14,7 @@ const Register = ({Loading, setLoading}) => {
     const router = useRouter();
 
     async function registerUser(e) {
+        try{
         e.preventDefault();
         setLoading(true);
         const fetch_api = await fetch("/api/register/", {
@@ -56,7 +57,18 @@ const Register = ({Loading, setLoading}) => {
                 progress: undefined,
                 theme: "light",
             });
-        }
+        }  } catch (error) {
+            toast.error(`You are offline`, {
+              position: "top-center",
+              autoClose: 3300,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
     }
 
 

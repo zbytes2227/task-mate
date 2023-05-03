@@ -59,21 +59,34 @@ const Dashboard = ({ Loading, setLoading }) => {
   };
 
   async function getCluster(load) {
-    if (load) { setLoading(true) };
-    const fetch_api = await fetch("/api/clusters/", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
+    try {
+      if (load) { setLoading(true) };
+      const fetch_api = await fetch("/api/clusters/", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
 
-    const data = await fetch_api.json();
-    setLoadingCluster(false)
-    // console.log(data.Clusters);
-    if (data.success) {
-      setClusters(data.Clusters);
-    } else {
-      setClusters(null);
+      const data = await fetch_api.json();
+      setLoadingCluster(false)
+      // console.log(data.Clusters);
+      if (data.success) {
+        setClusters(data.Clusters);
+      } else {
+        setClusters(null);
+      }
+      if (load) { setLoading(false) };
+    } catch (error) {
+      toast.error(`You are offline`, {
+        position: "top-center",
+        autoClose: 3300,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
-    if (load) { setLoading(false) };
   }
 
   const [LoadingCluster, setLoadingCluster] = useState(false)
@@ -83,30 +96,44 @@ const Dashboard = ({ Loading, setLoading }) => {
     setNewCluster(true);
     setNewClusterName("");
     setClusterInput(false);
-    const fetch_api = await fetch("/api/clusters/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        cluster_name: newClusterName,
-      }),
-    });
-    const data = await fetch_api.json();
-    if (data.success) {
-      toast.success(`${data.msg}`, {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+    try {
+      const fetch_api = await fetch("/api/clusters/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          cluster_name: newClusterName,
+        }),
       });
-      setClusterInput(false);
-    } else {
-      toast.error(`${data.msg}`, {
+      const data = await fetch_api.json();
+      if (data.success) {
+        toast.success(`${data.msg}`, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setClusterInput(false);
+      } else {
+        toast.error(`${data.msg}`, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+      setNewCluster(false);
+    } catch (error) {
+      toast.error(`You are offline`, {
         position: "top-center",
-        autoClose: 2000,
+        autoClose: 3300,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -115,7 +142,6 @@ const Dashboard = ({ Loading, setLoading }) => {
         theme: "light",
       });
     }
-    setNewCluster(false);
   }
 
 
@@ -123,26 +149,39 @@ const Dashboard = ({ Loading, setLoading }) => {
   const [LoadingTask, setLoadingTask] = useState(false);
 
   async function addTask() {
-    setLoadingTask(true)
-    setnewTask("");
-    const fetch_api = await fetch("/api/task/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        task_name: newTask,
-        description: " ",
-        is_completed: false,
-        cluster_id: ActiveCluster,
-      }),
-    });
-    const data = await fetch_api.json();
-    setLoadingTask(false)
-    if (data.success) {
-      setTasks(data.cluster);
-    } else {
-      toast.error(`${data.msg}`, {
+    try {
+      setLoadingTask(true)
+      setnewTask("");
+      const fetch_api = await fetch("/api/task/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          task_name: newTask,
+          description: " ",
+          is_completed: false,
+          cluster_id: ActiveCluster,
+        }),
+      });
+      const data = await fetch_api.json();
+      setLoadingTask(false)
+      if (data.success) {
+        setTasks(data.cluster);
+      } else {
+        toast.error(`${data.msg}`, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      toast.error(`You are offline`, {
         position: "top-center",
-        autoClose: 2000,
+        autoClose: 3300,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -150,6 +189,7 @@ const Dashboard = ({ Loading, setLoading }) => {
         progress: undefined,
         theme: "light",
       });
+      setLoadingTask(false)
     }
   }
 
@@ -184,29 +224,42 @@ const Dashboard = ({ Loading, setLoading }) => {
 
 
   const handleLogout = async () => {
-    const fetch_api = await fetch("/api/logout/", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    const data = await fetch_api.json();
-    if (data.success) {
-      toast.success(`${data.msg}`, {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+    try {
+      const fetch_api = await fetch("/api/logout/", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
       });
-      setTimeout(() => {
-        router.push('/login');
-      }, 500);
-    } else {
-      toast.error(`${data.msg}`, {
+      const data = await fetch_api.json();
+      if (data.success) {
+        toast.success(`${data.msg}`, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setTimeout(() => {
+          router.push('/login');
+        }, 500);
+      } else {
+        toast.error(`${data.msg}`, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      toast.error(`You are offline`, {
         position: "top-center",
-        autoClose: 2000,
+        autoClose: 3300,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -224,38 +277,22 @@ const Dashboard = ({ Loading, setLoading }) => {
   }, [Tasks]);
 
   async function toggleComplete(taskId, isCompleted, nm) {
-    const fetch_api = await fetch("/api/task/", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        cluster_id: ActiveCluster,
-        task_id: taskId,
-        is_completed: isCompleted,
-        method: true
-      }),
-    });
-    const data = await fetch_api.json();
-  }
-  const [ProfileDropDown, setProfileDropDown] = useState(true);
-  const [ClusterdropDown, setClusterdropDown] = useState(true);
-
-
-  const deleteCluster = async () => {
-    changeCluster(null)
-    const fetch_api = await fetch("/api/clusters/", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        cluster_id: ActiveCluster,
-      }),
-    });
-    const data = await fetch_api.json();
-    console.log(data);
-    setClusterdropDown(true)
-    if (data.success) {
-      toast.success(`${data.msg}`, {
+    try {
+      const fetch_api = await fetch("/api/task/", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          cluster_id: ActiveCluster,
+          task_id: taskId,
+          is_completed: isCompleted,
+          method: 'UPDATE_TASK'
+        }),
+      });
+      const data = await fetch_api.json();
+    } catch (error) {
+      toast.error(`You are offline`, {
         position: "top-center",
-        autoClose: 1000,
+        autoClose: 3300,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -263,10 +300,52 @@ const Dashboard = ({ Loading, setLoading }) => {
         progress: undefined,
         theme: "light",
       });
-    } else {
-      toast.error(`${data.msg}`, {
+    }
+  }
+  const [ProfileDropDown, setProfileDropDown] = useState(true);
+  const [ClusterdropDown, setClusterdropDown] = useState(true);
+
+
+  const deleteCluster = async () => {
+    try {
+      changeCluster(null)
+      const fetch_api = await fetch("/api/clusters/", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          cluster_id: ActiveCluster,
+        }),
+      });
+      const data = await fetch_api.json();
+      console.log(data);
+      setClusterdropDown(true)
+      if (data.success) {
+        toast.success(`${data.msg}`, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      } else {
+        toast.error(`${data.msg}`, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      toast.error(`You are offline`, {
         position: "top-center",
-        autoClose: 2000,
+        autoClose: 3300,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -280,26 +359,39 @@ const Dashboard = ({ Loading, setLoading }) => {
 
 
   const deleteTask = async (taskId) => {
-    console.log("del");
-    const fetch_api = await fetch("/api/task/", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        cluster_id: ActiveCluster,
-        task_id: taskId,
-        method: false,
-      }),
-    });
-    const data = await fetch_api.json();
-    console.log(data);
-    if (data.success) {
-      // remove the deleted task from the Tasks array
-      setTasks((prevState) => ({
-        ...prevState,
-        tasks: prevState.tasks.filter((task) => task._id !== taskId),
-      }));
+    try {
+      console.log("del");
+      const fetch_api = await fetch("/api/task/", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cluster_id: ActiveCluster,
+          task_id: taskId,
+          method: 'DELETE_TASK',
+        }),
+      });
+      const data = await fetch_api.json();
+      console.log(data);
+      if (data.success) {
+        // remove the deleted task from the Tasks array
+        setTasks((prevState) => ({
+          ...prevState,
+          tasks: prevState.tasks.filter((task) => task._id !== taskId),
+        }));
+      }
+    } catch (error) {
+      toast.error(`You are offline`, {
+        position: "top-center",
+        autoClose: 3300,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -329,6 +421,52 @@ const Dashboard = ({ Loading, setLoading }) => {
   // }
 
 
+
+
+
+
+  const deleteAllTasks = async () => {
+    console.log("del all");
+    try {
+      const fetch_api = await fetch("/api/task/", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cluster_id: ActiveCluster,
+          method: 'DELETE_ALL',
+        }),
+      });
+      const data = await fetch_api.json();
+      if (data.success) {
+        setClusterdropDown(true)
+        changeCluster(null)
+        console.log(data);
+        toast.error(`All Tasks Deleted`, {
+          position: "top-center",
+          autoClose: 3300,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      toast.error(`You are offline`, {
+        position: "top-center",
+        autoClose: 3300,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
 
 
   // const deleteTask = async (taskId) => {
@@ -397,7 +535,7 @@ const Dashboard = ({ Loading, setLoading }) => {
                     <div className="py-1" role="none">
                       {/* <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-0">{User.user_details.name}</a> */}
                       <Link href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-gray-600 dark:text-white" role="menuitem" tabIndex="-1" id="menu-item-1">{User.user_details.email}</Link>
-                      <Link href="/account" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-gray-600 dark:text-white" role="menuitem" tabIndex="-1" id="menu-item-2">Edit account</Link>
+                      <Link href="/account" className=" text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-gray-600 dark:text-white" role="menuitem" tabIndex="-1" id="menu-item-2">Edit account (Coming Soon)</Link>
                       <button onClick={handleLogout} type="submit" className="hover:bg-slate-100  hover:text-red-600 text-gray-700 block w-full px-4 py-2 text-left text-sm dark:hover:bg-gray-600 dark:text-white" role="menuitem" tabIndex="-1" id="menu-item-3">Sign out</button>
                     </div>
 
@@ -529,8 +667,8 @@ const Dashboard = ({ Loading, setLoading }) => {
                     <div className={`absolute ${ClusterdropDown && 'hidden'} right-2 z-10 w-48 text-left origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-700`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                       <div className="py-1" role="none">
                         {/* <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-0">{User.user_details.name}</a> */}
-                        <Link href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100 hover:bg-slate-100 dark:hover:bg-gray-600 dark:text-white" role="menuitem" tabIndex="-1" id="menu-item-1">Edit Cluster</Link>
-                        <Link href="/account" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100 hover:bg-slate-100 dark:hover:bg-gray-600 dark:text-white" role="menuitem" tabIndex="-1" id="menu-item-2">Remove all tasks</Link>
+                        {/* <Link href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100 hover:bg-slate-100 dark:hover:bg-gray-600 dark:text-white" role="menuitem" tabIndex="-1" id="menu-item-1">Edit Cluster</Link> */}
+                        <button onClick={deleteAllTasks} className="w-full text-left text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100 hover:bg-slate-100 dark:hover:bg-gray-600 dark:text-white" role="menuitem" tabIndex="-1" id="menu-item-2">Remove all tasks</button>
                         <button onClick={deleteCluster} type="button" className="hover:bg-slate-100  hover:text-red-600 text-gray-700 block w-full px-4 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-gray-600 dark:text-white" role="menuitem" tabIndex="-1" id="menu-item-3">Delete Cluster</button>
                       </div>
                     </div>
@@ -541,8 +679,10 @@ const Dashboard = ({ Loading, setLoading }) => {
                     <input
                       className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none dark:text-white text-md"
                       type="text"
+                      required={true}
                       placeholder="Type task name here...."
                       value={newTask}
+                      autoFocus={true}
                       onChange={(e) => {
                         setnewTask(e.target.value);
                       }}
@@ -569,7 +709,8 @@ const Dashboard = ({ Loading, setLoading }) => {
                       })}
                     {LoadingTask && <li className="py-2 text-gray-600 dark:bg-gray-700 my-2 animate-pulse bg-slate-100 rounded-lg shadow-lg cursor-pointer">
                       <div className='rounded cursor-pointer'>
-                        <input className="hidden" type="checkbox" id="task_1" checked={false} />
+                   
+                        <input className="hidden" type="checkbox" id="task_1" checked={false} autoFocus={true}/>
                         <label className="flex items-center justify-between h-10 px-2 cursor-pointer" htmlFor="task_1">
                           <div className='flex'>
                             <span className="flex items-center justify-center w-5 h-5 text-transparent border-2 border-gray-300 rounded-full">
