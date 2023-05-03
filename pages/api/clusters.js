@@ -24,7 +24,7 @@ const handler = async (req, res) => {
 
             const cookies = parse(req.headers.cookie || "");
             const token = cookies.access_token;
-            let decoded = await jwt.verify(token, "process.env.JWT_SECRET");
+            let decoded = await jwt.verify(token, process.env.JWT_SECRET);
             const user = await User.findOne({ _id: decoded._id })
             if (user) {
                 const cluster_name = await Cluster.findOne({ cluster_name: req.body.cluster_name })
