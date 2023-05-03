@@ -11,54 +11,24 @@ import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import Link from "next/link";
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   const router = useRouter();
   const ref = useRef();
 
-  const [ValidUser, setValidUser] = useState(false)
-  const [ujjwal, setujjwal] = useState('')
-  async function auth(){
-    const fetch_api = await fetch("/api/auth/", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-
-    const data = await fetch_api.json();
-    console.log("working ge");
-    console.log(data);
-    if (data.success) {
-      setValidUser(true);
-      setujjwal(data)
-    } else {
-      router.push('/login')
-      setValidUser(false);
-    }
-  }
 
   useEffect(() => {
-    auth()
-  }, [])
-  
-
-
-
-
-
-
-
-  // useEffect(() => {
-  //   const handleRouteChange = (url) => {
-  //     if (url !== router.asPath) {
-  //       toggleClusterMenu();
-  //       router.events.emit("routeChangeError");
-  //       router.push("/dashboard");
-  //     }
-  //   };
-  //   router.events.on("beforeHistoryChange", handleRouteChange);
-  //   return () => {
-  //     router.events.off("beforeHistoryChange", handleRouteChange);
-  //   };
-  // }, [router]);
+    const handleRouteChange = (url) => {
+      if (url !== router.asPath) {
+        toggleClusterMenu();
+        router.events.emit("routeChangeError");
+        router.push("/dashboard");
+      }
+    };
+    router.events.on("beforeHistoryChange", handleRouteChange);
+    return () => {
+      router.events.off("beforeHistoryChange", handleRouteChange);
+    };
+  }, [router]);
 
   const [Loading, setLoading] = useState(false);
   const [Cluster, setClusters] = useState([]);
@@ -261,14 +231,13 @@ const Dashboard = () => {
 
   return (
     <>
-    {ValidUser &&
       <div className="flex p-1 h-[100vh]">
         <ToastContainer />
 
         <div
           ref={ref}
           className="flex flex-col justify-between w-full md:w-2/3 fixed sm:relative top-0 left-0 bg-white lg:w-1/3 transform transition-transform  sm:translate-x-0 sm:z-20 sm:overflow-x-scroll"
-          >
+        >
           {/* sm:translate-x-full */}
           <div>
             <div className=" flex justify-between h-[10vh] px-3 mx-2 bg-white shadow-lg rounded-b-xl">
@@ -278,24 +247,24 @@ const Dashboard = () => {
                 </h1>
                 {/* <h1 className="font-extrabold leading-tight text-left text-lg md:text-2xl">
                   <span className="text-indigo-600">Welcome back</span>{" "}
-                  {ujjwal.user_details.name}
+                  {props.user_details.name}
                 </h1> */}
               </div>
 
               <div onMouseOver={() => setProfileDropDown(false)} onMouseLeave={() => setProfileDropDown(true)}
                 href="#"
                 className="flex items-center flex-col justify-center cursor-pointer "
-                >
+              >
                 <img
                   alt="profil"
                   src="/profile.png"
                   className="mx-auto object-cover rounded-full h-12 w-12 "
-                  />
-                {ujjwal.user_details.name}
+                />
+                {props.user_details.name}
                 <div className={`absolute ${ProfileDropDown && 'hidden'} right-2 mt-48 z-10 w-48 text-left origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                   <div className="py-1" role="none">
-                    {/* <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-0">{ujjwal.user_details.name}</a> */}
-                    <Link href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-1">{ujjwal.user_details.email}</Link>
+                    {/* <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-0">{props.user_details.name}</a> */}
+                    <Link href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-1">{props.user_details.email}</Link>
                     <Link href="/account" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-2">Edit account</Link>
                     <button onClick={handleLogout} type="submit" className="hover:bg-slate-100  hover:text-red-600 text-gray-700 block w-full px-4 py-2 text-left text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">Sign out</button>
                   </div>
@@ -318,14 +287,14 @@ const Dashboard = () => {
                   <button
                     onClick={() => setClusterInput(true)}
                     className="flex items-center text-gray-800 border-0  hover:text-black focus:outline-none"
-                    >
+                  >
                     <svg
                       width="24"
                       height="24"
                       fill="currentColor"
                       viewBox="0 0 1792 1792"
                       xmlns="http://www.w3.org/2000/svg"
-                      >
+                    >
                       <path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"></path>
                     </svg>
                   </button>
@@ -335,7 +304,7 @@ const Dashboard = () => {
                     <label
                       htmlFor="default-search"
                       className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-                      >
+                    >
                       Enter new Cluster name
                     </label>
                     <form className="relative" onSubmit={(e) => { e.preventDefault(), addCluster() }}>
@@ -352,11 +321,11 @@ const Dashboard = () => {
                         onChange={(e) => {
                           setNewClusterName(e.target.value);
                         }}
-                        />
+                      />
                       <button
                         type="submit"
                         className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        >
+                      >
                         Create
                       </button>
                     </form>
@@ -366,17 +335,17 @@ const Dashboard = () => {
                   Cluster.map((cluster, indx) => {
                     return (
                       <Bunch
-                      key={indx}
-                      clusterId={cluster._id}
-                      changeCluster={changeCluster}
-                      name={cluster.cluster_name}
-                      status={cluster.tasks.length}
+                        key={indx}
+                        clusterId={cluster._id}
+                        changeCluster={changeCluster}
+                        name={cluster.cluster_name}
+                        status={cluster.tasks.length}
                       />
-                      );
-                    })
-                    ) : (
-                      <p>Unable to fetch Your Cluster</p>
-                      )}
+                    );
+                  })
+                ) : (
+                  <p>Unable to fetch Your Cluster</p>
+                )}
               </div>
             </div>
           </div>
@@ -392,7 +361,7 @@ const Dashboard = () => {
                 className="mx-auto mb-2 animate-bounce"
                 height={400}
                 width={400}
-                /></div></div>
+              /></div></div>
         }
         {Tasks && (
           <div className="w-full sm:w-2/3  md:block m-1">
@@ -410,7 +379,7 @@ const Dashboard = () => {
                   </svg>
                   <div className={`absolute ${ClusterdropDown && 'hidden'} right-2 z-10 w-48 text-left origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                     <div className="py-1" role="none">
-                      {/* <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-0">{ujjwal.user_details.name}</a> */}
+                      {/* <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-0">{props.user_details.name}</a> */}
                       <Link href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-1">Edit Cluster</Link>
                       <Link href="/account" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-2">Remove all tasks</Link>
                       <button type="submit" className="hover:bg-slate-100  hover:text-red-600 text-gray-700 block w-full px-4 py-2 text-left text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">Delete Cluster</button>
@@ -428,11 +397,11 @@ const Dashboard = () => {
                     onChange={(e) => {
                       setnewTask(e.target.value);
                     }}
-                    />
+                  />
                   <button
                     className="flex-shrink-0 mx-2 bg-orange-500 hover:bg-orange-700 border-orange-500 hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded"
                     type="submit"
-                    >
+                  >
                     Add
                   </button>
                 </div>
@@ -456,10 +425,43 @@ const Dashboard = () => {
           </div>
         )}
       </div>
-}
     </>
   );
 };
 
+export async function getServerSideProps(context) {
+  // Parse cookies from the request headers
+  const cookies = parse(context.req.headers.cookie || "");
+  const token = cookies.access_token;
+
+  try {
+    // Verify the JWT token
+    let decoded = await jwt.verify(token, process.env.JWT_SECRET);
+    // console.log(decoded._id);
+    let user = await User.findOne({ _id: decoded._id });
+    // let user_Cluster = await Cluster.findOne({ user_id: user._id });
+    // console.log(user_Cluster);
+
+    if (user) {
+      decoded = { name: user.name, email: user.email };
+      // console.log(decoded);
+    }
+
+    return {
+      props: {
+        user_details: decoded,
+        // Cluster: user_Cluster.Cluster
+      },
+    };
+  } catch (err) {
+    // Handle invalid or expired token
+    return {
+      redirect: {
+        destination: "/login", // Redirect to login page if the token is invalid or expired
+        permanent: false,
+      },
+    };
+  }
+}
 
 export default Dashboard;
