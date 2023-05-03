@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
@@ -76,10 +77,10 @@ const Login = () => {
             <div className="bg-[rgb(226,102,30)] w-[999px] h-[971px] filter blur-[509px]"></div>
           </div>
 
-          <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+          <Link href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
             <img className="w-16 h-16 mr-2 rounded-full" src="/192.png" alt="logo" />
             Task Mate
-          </a>
+          </Link>
           <div className="absolute w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 ">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
@@ -103,7 +104,7 @@ const Login = () => {
                 </div>
                 <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800">Sign in</button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Dont have an account yet? <a href="/register" className="font-medium text-orange-600 hover:underline dark:text-orange-500">Sign up</a>
+                  Dont have an account yet? <Link href="/register" className="font-medium text-orange-600 hover:underline dark:text-orange-500">Sign up</Link>
                 </p>
               </form>
             </div>

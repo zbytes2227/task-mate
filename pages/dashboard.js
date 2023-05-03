@@ -9,6 +9,7 @@ import Task from "./components/Task";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
+import Link from "next/link";
 
 const Dashboard = (props) => {
   const router = useRouter();
@@ -262,8 +263,8 @@ const Dashboard = (props) => {
                 <div className={`absolute ${ProfileDropDown && 'hidden'} right-2 mt-48 z-10 w-48 text-left origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                   <div className="py-1" role="none">
                     {/* <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-0">{props.user_details.name}</a> */}
-                    <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-1">{props.user_details.email}</a>
-                    <a href="/account" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-2">Edit account</a>
+                    <Link href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-1">{props.user_details.email}</Link>
+                    <Link href="/account" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-2">Edit account</Link>
                     <button onClick={handleLogout} type="submit" className="hover:bg-slate-100  hover:text-red-600 text-gray-700 block w-full px-4 py-2 text-left text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">Sign out</button>
                   </div>
 
@@ -378,8 +379,8 @@ const Dashboard = (props) => {
                   <div className={`absolute ${ClusterdropDown && 'hidden'} right-2 z-10 w-48 text-left origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                     <div className="py-1" role="none">
                       {/* <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-0">{props.user_details.name}</a> */}
-                      <a href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-1">Edit Cluster</a>
-                      <a href="/account" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-2">Remove all tasks</a>
+                      <Link href="#" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-1">Edit Cluster</Link>
+                      <Link href="/account" className="text-gray-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabIndex="-1" id="menu-item-2">Remove all tasks</Link>
                       <button type="submit" className="hover:bg-slate-100  hover:text-red-600 text-gray-700 block w-full px-4 py-2 text-left text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">Delete Cluster</button>
                     </div>
                   </div>

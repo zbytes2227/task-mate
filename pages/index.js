@@ -41,15 +41,15 @@ export default function Home() {
                         <div className="flex items-center justify-between">
                         </div>
                         <div className="items-center text-center md:flex ">
-                            <a href="/" className="mx-3 text-lg text-white uppercase cursor-pointer hover:text-gray-300">
+                            <Link href="/" className="mx-3 text-lg text-white uppercase cursor-pointer hover:text-gray-300">
                                 Home
-                            </a>
-                            <a href="/about" className="mx-3 text-lg text-white uppercase cursor-pointer hover:text-gray-300">
+                            </Link>
+                            <Link href="/about" className="mx-3 text-lg text-white uppercase cursor-pointer hover:text-gray-300">
                                 About
-                            </a>
-                            <a href="/dashboard" className="mx-3 text-lg text-white uppercase cursor-pointer hover:text-gray-300">
+                            </Link>
+                            <Link href="/dashboard" className="mx-3 text-lg text-white uppercase cursor-pointer hover:text-gray-300">
                             Dashboard
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </nav>

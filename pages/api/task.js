@@ -38,7 +38,7 @@ const handler = async (req, res) => {
             console.error('err');
             res.json({ success: false, msg: "ERROR" });
         } else {
-            console.log(cluster);
+            // console.log(cluster);
             let newTask = {
                 task_name: req.body.task_name,
                 description: req.body.description,
