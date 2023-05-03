@@ -1,0 +1,23 @@
+{
+    "name": "Task Mate",
+    "short_name": "Task Mate  - Simple Solution for Complex Problems",
+    "icons": [
+      {
+        "src": "/192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+  
+      {
+        "src": "/512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "theme_color": "#F97316",
+    "background_color": "#F97316",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait"
+  }

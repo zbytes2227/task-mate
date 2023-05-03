@@ -30,10 +30,10 @@ export default function Home() {
 
 
       <div className="relative h-screen overflow-hidden bg-indigo-900">
-            <img alt='s' src="/bg.jpg" className="absolute object-cover w-full h-full" />
+            <img alt='s' src="bg12.jpg" className="absolute object-cover w-full h-full" />
             <div className="absolute inset-0 bg-black opacity-25">
             </div>
-        <div className="absolute inset-0 bg-gray-900 bg-opacity-30 backdrop-filter backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-gray-900 bg-opacity-30 backdrop-filter backdrop-blur-md"></div>
 
             <header className="absolute top-0 left-0 right-0 z-20">
                 <nav className="container px-6 py-4 mx-auto md:px-12">

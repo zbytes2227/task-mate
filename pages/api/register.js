@@ -34,7 +34,7 @@ const handler = async (req, res) => {
             return res.setHeader('Set-Cookie', serialize('access_token', token, {
                 httpOnly: true,
                 sameSite: "strict",
-                //  secure: true, 
+                 secure: true, 
                 path: '/',
                 }))
                 .json({ success: true, msg: "Congrats! Account has been created.." });
