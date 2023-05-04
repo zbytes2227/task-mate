@@ -30,7 +30,7 @@ const handler = async (req, res) => {
                 cluster_name: "Welcome to Task Mate...."
             });
             await newCluster.save();
-            const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+            const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: "10h" });
             return res.setHeader('Set-Cookie', serialize('access_token', token, {
                 httpOnly: true,
                 sameSite: "strict",
